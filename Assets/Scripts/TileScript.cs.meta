@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ebfeb6c759ba3a84787919aeaa774178
+timeCreated: 1526515890
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - default_material: {fileID: 2100000, guid: c4c4ac1ecdcf45344839bf2ad39e8401, type: 2}
+  - hit_material: {fileID: 2100000, guid: b0c2ef628860db14db4fdb01bcaee5e9, type: 2}
+  - missed_material: {fileID: 2100000, guid: 43ee73b0bad10324ebbfaec1b3526af2, type: 2}
+  - selected_material: {fileID: 2100000, guid: f865dca4bdeaf5f46a889218a343a5b7, type: 2}
+  - game_script: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
