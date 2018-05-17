@@ -10,12 +10,14 @@ public class GameScript : MonoBehaviour {
 	public int tiles_remaining;
 	private int num_tiles;
 	private TileScript tile;
+	public int score;
 	// Use this for initialization
 	void Start () {
 		tiles = GameObject.FindGameObjectsWithTag("Tile"); //Gets a list of tiles
 		tiles_remaining = num_tiles = tiles.Length;
 		start_frequency = frequency;
 		tile = null;
+		score = 0;
 	}
 	
 	// Update is called once per frame

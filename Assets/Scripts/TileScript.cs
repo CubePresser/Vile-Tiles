@@ -8,6 +8,7 @@ public class TileScript : MonoBehaviour {
 	public GameScript game_script;
 	public int status; // 0 default, 1 hit, -1 missed, -5 = selected
 	private Renderer renderer;
+	private bool inTrigger;
 
 	public void UpdateMaterial (int value) {
 		switch(value) {
@@ -17,11 +18,13 @@ public class TileScript : MonoBehaviour {
 			case 1:
 				renderer.material = hit_material;
 				game_script.tiles_remaining--;
+				game_script.score++;
 				break;
 			case -1:
 				renderer.material = missed_material;
-				if(status != 1)
+				if(status == 0)
 					game_script.tiles_remaining--;
+				game_script.score--;
 				break;
 			case -5:
 				renderer.material = selected_material;
@@ -35,8 +38,14 @@ public class TileScript : MonoBehaviour {
 		renderer = GetComponent<Renderer>();
 		status = 0; //Default status 
 	}
-	private void OnTriggerStay() {
-		if(Input.GetKeyDown("space"))
+	private void OnTriggerEnter() {
+		inTrigger = true;
+	}
+	private void OnTriggerExit () {
+		inTrigger = false;
+	}
+	private void Update () {
+		if(Input.GetKeyDown("space") && inTrigger)
 		{
 			if(status == -5)
 			{
