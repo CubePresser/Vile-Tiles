@@ -45,7 +45,7 @@ public class TileScript : MonoBehaviour {
 		inTrigger = false;
 	}
 	private void Update () {
-		if(Input.GetKeyDown("space") && inTrigger)
+		if(Input.GetButtonDown("Select") && inTrigger)
 		{
 			if(status == -5)
 			{
