@@ -5,46 +5,58 @@ using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour {
 
-	public GameObject[] tiles;
 	public float frequency; //Seconds between tile switching
-	public int tiles_remaining;
 	public int score;
 	public Text score_text;
 	public Text timer_text;
-	private float start_frequency;
-	private int num_tiles;
+	private List<TileScript> tiles;
 	private TileScript tile;
+	private int tiles_remaining;
+	private float start_frequency;
 	private float elapsedTime;
-	// Use this for initialization
+
+	//Removes a tile from the tiles array
+	public void remove_tile (TileScript tile_to_remove) {
+		tiles.Remove(tile_to_remove);
+		tiles_remaining--;
+	}
+
+	private void get_tiles()
+	{
+		GameObject[] tile_objects = GameObject.FindGameObjectsWithTag("Tile"); //Gets an array of tile game objects
+		tiles_remaining = tile_objects.Length;
+		tiles = new List<TileScript>();
+		for(int i = 0; i < tiles_remaining; i++)
+		{
+			tiles.Add(tile_objects[i].GetComponent<TileScript>());
+		}
+	}
+
 	void Start () {
-		tiles = GameObject.FindGameObjectsWithTag("Tile"); //Gets a list of tiles
-		tiles_remaining = num_tiles = tiles.Length;
+		get_tiles();
 		start_frequency = frequency;
 		tile = null;
 		score = 0;
 		elapsedTime = 0;
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		elapsedTime += Time.deltaTime;
+		float seconds = Time.deltaTime; //Used so that we only call Time.deltaTime once
+		elapsedTime += seconds;
+		frequency -= seconds;
+
 		timer_text.text = "Time: "  + elapsedTime.ToString("0.00");
 		score_text.text = "Score: " + score; //Update score
-		frequency -= Time.deltaTime;
+
 		if(frequency < 0 && tiles_remaining > 0)
 		{
-			if(tile != null && tile.status == -5)
-			{
-				tile.UpdateMaterial(0);
-			}
 			frequency = start_frequency; // Reset frequency
-
-			int rand = Random.Range(0, num_tiles);
-			while((tile = tiles[rand].GetComponent<TileScript>()).status != 0 && tiles_remaining > 0) //Performance heavy, need to change
+			if(tile != null && tile.status == -5) //Set the previous tile to the default material if it is not the first tile
 			{
-				rand = Random.Range(0, num_tiles); //Gets a tile with default status
+				tile.UpdateMaterial(0); //Reset the tile to default material (Deselection)
 			}
-			tile.UpdateMaterial(-5);
+			tile = tiles[Random.Range(0, tiles_remaining)]; //Get a random tile in the list of remaining tiles to set
+			tile.UpdateMaterial(-5); //Update the tile to selected material
 		}
 	}
 }
