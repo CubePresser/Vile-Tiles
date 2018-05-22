@@ -17,16 +17,16 @@ public class TileScript : MonoBehaviour {
 				break;
 			case 1:
 				t_renderer.material = hit_material;
-				game_script.remove_tile(this);
-				game_script.score++;
+				game_script.Remove_Tile(this);
+				game_script.Add_Score(1);
 				break;
 			case -1:
 				t_renderer.material = missed_material;
 				if(status == 0)
 				{
-					game_script.remove_tile(this);
+					game_script.Remove_Tile(this);
 				}
-				game_script.score--;
+				game_script.Add_Score(-1);
 				break;
 			case -5:
 				t_renderer.material = selected_material;

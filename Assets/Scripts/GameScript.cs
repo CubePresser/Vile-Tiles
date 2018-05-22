@@ -2,26 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameScript : MonoBehaviour {
 
-	public float frequency; //Seconds between tile switching
-	public int score;
+	private static float frequency = 2.0f; //Seconds between tile switching
+	private static float time_limit = 30.0f;
 	public Text score_text;
 	public Text timer_text;
+	private static int score = 0;
 	private List<TileScript> tiles;
 	private TileScript tile;
 	private int tiles_remaining;
 	private float start_frequency;
-	private float elapsedTime;
+	private float current_time_limit;
+
+	public void Add_Score(int value)
+	{
+		score += value;
+	}
 
 	//Removes a tile from the tiles array
-	public void remove_tile (TileScript tile_to_remove) {
+	public void Remove_Tile (TileScript tile_to_remove) {
 		tiles.Remove(tile_to_remove);
 		tiles_remaining--;
 	}
 
-	private void get_tiles()
+	private void Get_Tiles()
 	{
 		GameObject[] tile_objects = GameObject.FindGameObjectsWithTag("Tile"); //Gets an array of tile game objects
 		tiles_remaining = tile_objects.Length;
@@ -32,23 +39,45 @@ public class GameScript : MonoBehaviour {
 		}
 	}
 
+	private void Next_Level()
+	{
+		frequency = start_frequency - 0.05f;
+		time_limit = current_time_limit - 0.05f;
+		SceneManager.LoadScene("Dev_test");
+		return;
+	}
+
+	private void Game_Over()
+	{
+		return;
+	}
+
 	void Start () {
-		get_tiles();
+		Get_Tiles();
 		start_frequency = frequency;
 		tile = null;
-		score = 0;
-		elapsedTime = 0;
+		current_time_limit = time_limit;
 	}
 	
 	void Update () {
 		float seconds = Time.deltaTime; //Used so that we only call Time.deltaTime once
-		elapsedTime += seconds;
+		time_limit -= seconds;
 		frequency -= seconds;
 
-		timer_text.text = "Time: "  + elapsedTime.ToString("0.00");
+		timer_text.text = "Time: "  + time_limit.ToString("0.00");
 		score_text.text = "Score: " + score; //Update score
 
-		if(frequency < 0 && tiles_remaining > 0)
+		if(tiles_remaining == 0) //Proceed to next level
+		{
+			Next_Level();
+		}
+
+		if(time_limit < 0)
+		{
+			Game_Over();
+		}
+
+		if(frequency < 0)
 		{
 			frequency = start_frequency; // Reset frequency
 			if(tile != null && tile.status == -5) //Set the previous tile to the default material if it is not the first tile

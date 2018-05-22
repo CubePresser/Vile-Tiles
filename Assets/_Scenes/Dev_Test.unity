@@ -1358,6 +1358,11 @@ Prefab:
       propertyPath: frequency
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114107188189585104, guid: 916b20a51c477d042995523211fd19aa,
+        type: 2}
+      propertyPath: time_limit
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 916b20a51c477d042995523211fd19aa, type: 2}
   m_IsPrefabParent: 0
