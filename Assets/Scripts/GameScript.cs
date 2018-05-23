@@ -8,8 +8,10 @@ public class GameScript : MonoBehaviour {
 
 	private static float frequency = 2.0f; //Seconds between tile switching
 	private static float time_limit = 30.0f;
+	private static int level = 1;
 	public Text score_text;
 	public Text timer_text;
+	public Text level_text;
 	private static int score = 0;
 	private List<TileScript> tiles;
 	private TileScript tile;
@@ -45,6 +47,7 @@ public class GameScript : MonoBehaviour {
 	{
 		frequency = start_frequency - 0.05f;
 		time_limit = current_time_limit - 0.05f;
+		level++;
 		SceneManager.LoadScene("Dev_test");
 		return;
 	}
@@ -59,6 +62,8 @@ public class GameScript : MonoBehaviour {
 		start_frequency = frequency;
 		tile = null;
 		current_time_limit = time_limit;
+
+		level_text.text = "Level: " + level;
 	}
 	
 	void Update () {
