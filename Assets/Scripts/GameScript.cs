@@ -20,6 +20,8 @@ public class GameScript : MonoBehaviour {
 	public void Add_Score(int value)
 	{
 		score += value;
+		if(value > 0)
+			frequency = 0;
 	}
 
 	//Removes a tile from the tiles array
