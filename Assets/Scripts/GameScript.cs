@@ -12,6 +12,7 @@ public class GameScript : MonoBehaviour {
 	public Text score_text;
 	public Text timer_text;
 	public Text level_text;
+	public LevelRotationScript lrs;
 	private static int score = 0;
 	private List<TileScript> tiles;
 	private TileScript tile;
@@ -43,12 +44,19 @@ public class GameScript : MonoBehaviour {
 		}
 	}
 
+	private void set_new_rotation()
+	{
+		//Randomizes the rotation speeds on the x and y axis by a random value between 0 and the current level
+		lrs.set_speed(Random.Range(0, level + 1), Random.Range(0, level + 1));
+	}
+
 	private void Next_Level()
 	{
+		set_new_rotation();
 		frequency = start_frequency - 0.05f;
 		time_limit = current_time_limit - 0.05f;
 		level++;
-		SceneManager.LoadScene("Dev_test");
+		SceneManager.LoadScene("Levels");
 		return;
 	}
 
@@ -59,10 +67,10 @@ public class GameScript : MonoBehaviour {
 
 	void Start () {
 		Get_Tiles();
+		lrs = GameObject.FindGameObjectWithTag("Tile-Field").GetComponent<LevelRotationScript>();
 		start_frequency = frequency;
 		tile = null;
 		current_time_limit = time_limit;
-
 		level_text.text = "Level: " + level;
 	}
 	
