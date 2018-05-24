@@ -62,6 +62,10 @@ public class GameScript : MonoBehaviour {
 
 	private void Game_Over()
 	{
+		ValueClass.final_level = level;
+		ValueClass.final_score = score;
+
+		SceneManager.LoadScene("GameOver");
 		return;
 	}
 
@@ -78,6 +82,12 @@ public class GameScript : MonoBehaviour {
 		float seconds = Time.deltaTime; //Used so that we only call Time.deltaTime once
 		time_limit -= seconds;
 		frequency -= seconds;
+
+		//Temporary escape key
+		if(Input.GetKey("escape"))
+		{
+			Application.Quit();
+		}
 
 		timer_text.text = "Time: "  + time_limit.ToString("0.00");
 		score_text.text = "Score: " + score; //Update score
