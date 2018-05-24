@@ -9,4 +9,14 @@ public class MenuScript : MonoBehaviour {
 	{
 		SceneManager.LoadScene("Levels");
 	}
+
+	public void Leaderboard()
+	{
+		return;
+	}
+
+	public void Exit_Game()
+	{
+		Application.Quit();
+	}
 }
