@@ -78,6 +78,7 @@ public class GameScript : MonoBehaviour {
 		{
 			frequency  = 2.0f;
 			time_limit = 30.0f;
+			level = 1;
 			score = 0;
 			game_restart = false;
 			lrs.set_speed(0, 0);
