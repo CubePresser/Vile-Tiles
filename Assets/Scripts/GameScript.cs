@@ -9,6 +9,7 @@ public class GameScript : MonoBehaviour {
 	private static float frequency = 2.0f; //Seconds between tile switching
 	private static float time_limit = 30.0f;
 	private static int level = 1;
+	private static bool game_restart = false;
 	public Text score_text;
 	public Text timer_text;
 	public Text level_text;
@@ -65,13 +66,25 @@ public class GameScript : MonoBehaviour {
 		ValueClass.final_level = level;
 		ValueClass.final_score = score;
 
+		game_restart = true;
+
 		SceneManager.LoadScene("GameOver");
 		return;
 	}
 
 	void Start () {
+		lrs = GameObject.FindGameObjectWithTag("Tile-Field").GetComponent<LevelRotationScript>();	
+		if(game_restart)
+		{
+			frequency  = 2.0f;
+			time_limit = 30.0f;
+			score = 0;
+			game_restart = false;
+			lrs.set_speed(0, 0);
+		}
+
 		Get_Tiles();
-		lrs = GameObject.FindGameObjectWithTag("Tile-Field").GetComponent<LevelRotationScript>();
+		
 		start_frequency = frequency;
 		tile = null;
 		current_time_limit = time_limit;
